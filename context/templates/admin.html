@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1100px; margin: 3rem auto;">
+  <h1 style="text-align:center; color:var(--primary);">Admin Dashboard</h1>
+  <p style="text-align:center;">Welcome, <strong>{{ current_user.username }}</strong></p>
+
+  <a href="{{ url_for('routes.admin_post_form') }}" 
+     style="display:inline-block; padding:1rem 2rem; background:#2563eb; color:white; border-radius:8px; text-decoration:none; margin:2rem 0;">
+    + New Post
+  </a>
+
+  <h2>Recent Posts ({{ posts|length }})</h2>
+  <div class="posts-grid">
+    {% for post in posts %}
+    <article class="post-card">
+      <div class="post-content">
+        <h3>{{ post.title }}</h3>
+        <p><small>{{ post.date_posted.strftime('%Y-%m-%d') }} by {{ post.author.username }}</small></p>
+        <a href="{{ url_for('routes.admin_post_form', post_id=post.id) }}">Edit</a> • 
+        <a href="{{ url_for('routes.admin_delete_post', post_id=post.id) }}" 
+           style="color:red;" onclick="return confirm('Delete this post?')">Delete</a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  <h2>Users ({{ users|length }})</h2>
+  <ul>
+    {% for user in users %}
+    <li>{{ user.username }} {% if user.is_admin %}(admin){% endif %}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

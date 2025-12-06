@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if post else 'New' }} Post{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 800px; margin: 3rem auto;">
+  <h1>{{ 'Edit Post' if post else 'Write New Post' }}</h1>
+
+  <form method="post">
+    <div style="margin-bottom:1rem;">
+      <label><strong>Title</strong></label>
+      <input type="text" name="title" value="{{ post.title if post }}" required 
+             style="width:100%; padding:1rem; font-size:1.1rem; border-radius:8px; border:1px solid #ccc;">
+    </div>
+
+    <div style="margin-bottom:1.5rem;">
+      <label><strong>Content (Markdown supported)</strong></label>
+      <textarea name="content" rows="15" required 
+                style="width:100%; padding:1rem; font-family:monospace; border-radius:8px; border:1px solid #ccc;">{{ post.content if post }}</textarea>
+    </div>
+
+    <button type="submit" 
+            style="padding:1rem 2rem; background:#2563eb; color:white; border:none; border-radius:8px; cursor:pointer;">
+      {{ 'Update Post' if post else 'Publish Post' }}
+    </button>
+    <a href="{{ url_for('routes.admin_dashboard') }}" style="margin-left:1rem;">Cancel</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}MyLearnings{% endblock %} - Asliddin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/usermodal.css') }}" />
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="{{ url_for('routes.user') }}" class="logo">MyLearnings</a>
+        <div class="nav-links">
+          <a href="{{ url_for('routes.user') }}">Home</a>
+          <a href="#" id="about-trigger">About</a>
+          
+
+          {% if current_user.is_authenticated and current_user.is_admin %}
+              <a href="{{ url_for('routes.admin_dashboard') }}">Admin</a>
+          {% endif  %}
+          
+          {% if current_user.is_authenticated %}
+            {% if current_user.is_admin %}
+              <a href="{{ url_for('routes.admin_post_form') }}">+ New Post</a>
+            {% endif %}
+            <a href="{{ url_for('routes.logout') }}">Logout ({{ current_user.username }})</a>
+          {% else %}
+            <a href="{{ url_for('routes.login') }}">Login</a>
+            <a href="{{ url_for('routes.signup') }}">Sign Up</a>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Flash messages (for login errors, success, etc.) -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for message in messages %}
+            <div class="flash">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Made with curiosity and too much coffee • © 2025 Asliddin</p>
+    </div>
+  </footer>
+
+  <!-- About Modal -->
+  <div id="about-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2>About This Site</h2>
+      <p>Hi! I'm <strong>Asliddin</strong> — a curious developer who learns something new every week and shares it here.</p>
+      <p>This is my personal learning journal. Every post is something that finally "clicked" for me.</p>
+      <p><strong>One new thing every week. No fluff. Just honest learning.</strong></p>
+      <div style="margin-top: 2rem; text-align: center;">
+        <small>Made with curiosity and too much coffee</small>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- JavaScript -->
+  <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
+

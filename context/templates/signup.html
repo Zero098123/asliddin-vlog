@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    
+    <!-- Static files now use url_for() -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css"/>
+    <script src="https://kit.fontawesome.com/cb792c0850.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="signup-login">
+        <div class="signup-box">
+            <!-- Form uses Flask's WTForms -->
+            <form method="post" enctype="multipart/form-data">
+                
+                
+                <div class="heading">
+                    Sign up
+                </div>
+                <div class="line"></div>
+                
+                <!-- Form fields using WTForms -->
+
+               <div class="field">
+                    <b>username:</b>
+                    <input type="fnm" class="inp" required placeholder="username: " name="username"/>
+                </div>
+               <div class="field">
+                    <b>email:</b>
+                    <input type="phone" class="inp" required placeholder="email: " name="email"/>
+                </div>
+                <div class="field">
+                    <b>password:</b>
+                    <input type="password" class="inp" required placeholder="password: " name="password"/>
+                </div>
+
+                <div class="field">
+                    <b>confirm password:</b>
+                    <input type="password" class="inp" required placeholder="confirm password: " name="cpwd"/>
+                </div>
+                
+                
+                <div class="field">
+                      <input type="submit" class="submit-button" value="Sign up">
+                <div class="line"></div>
+                
+            </form>
+            
+            <div class="field">
+                <!-- URL uses url_for() -->
+                <a class="anc" style="margin-left:130px;" href="{{ url_for('routes.login') }}">Already have an account</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
