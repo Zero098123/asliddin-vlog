@@ -8,10 +8,27 @@ routes = Blueprint('routes', __name__)
 
 # ==================== HOME / USER PAGE ====================
 @routes.route('/')
-@routes.route('/user')
-def user():
-    posts = Post.query.order_by(Post.date_posted.desc()).all()
-    return render_template('user.html', posts=posts)
+@routes.route('/category/<string:category>')
+def user(category=None):
+    # Get all unique categories for the filter bar
+    all_categories = db.session.query(Post.category).distinct().order_by(Post.category).all()
+    categories = [cat[0] for cat in all_categories]
+
+    # Filter posts if category is provided
+    query = Post.query.order_by(Post.date_posted.desc())
+    if category:
+        query = query.filter_by(category=category)
+
+    posts = query.all()
+
+    return render_template(
+        'user.html',
+        posts=posts,
+        categories=categories,
+        current_category=category
+    )
+
+
 
 # ==================== LOGIN ====================
 @routes.route('/login', methods=['GET', 'POST'])
@@ -137,13 +154,20 @@ def admin_post_form(post_id=None):
     if request.method == 'POST':
         title = request.form['title']
         content = request.form['content']
+        category = request.form.get('category', '').strip()
 
         if post:
             post.title = title
             post.content = content
+            post.category = category or None
             flash('Post updated!', 'success')
         else:
-            new_post = Post(title=title, content=content, author=current_user)
+            new_post = Post(
+                title=title,
+                content=content,
+                category=category or None,  # Save empty as None
+                author=current_user
+            )
             db.session.add(new_post)
             flash('Post created!', 'success')
 

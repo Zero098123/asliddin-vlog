@@ -5,42 +5,62 @@
 {% block content %}
 
   <h1>Things I've Learned</h1>
-  <p class="subtitle">I share one thing I learned every week. Sometimes deep, sometimes random.</p>
+  <p class="subtitle">I share what I've learned and created.</p>
+
+  <!-- Category Filter Bar -->
+  <div class="category-filter">
+    <a href="{{ url_for('routes.user') }}" class="{% if not current_category %}active{% endif %}">
+      All Posts
+    </a>
+    {% for category in categories %}
+      <a href="{{ url_for('routes.user', category=category) }}"
+         class="{% if current_category == category %}active{% endif %}">
+        {{ category }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <!-- Optional: Show current filter -->
+  {% if current_category %}
+    <p class="current-filter">Showing posts in: <strong>{{ current_category }}</strong></p>
+  {% endif %}
 
   <div class="posts-grid">
-    {% for post in posts %}
-      <article class="post-card">
-        <!-- Optional: add image later if you want -->
-        <!-- <img src="{{ post.image }}" class="post-image"> -->
+    {% if posts|length > 0 %}
+      {% for post in posts %}
+        <article class="post-card">
+          <div class="post-content">
+            <div class="post-meta">
+              <span>{{ post.date_posted.strftime('%b %d, %Y') }}</span>  
+            </div>
 
-        <div class="post-content">
-          <div class="post-meta">
-            <span>{{ post.date_posted.strftime('%b %d, %Y') }}</span>
-            <span>•</span>
-            <span>{{ post.content|striptags|wordcount }} min read</span>
+            <h3 class="post-title">
+              <a href="{{ url_for('routes.post_detail', post_id=post.id) }}">
+                {{ post.title }}
+              </a>
+            </h3>
+
+            <p class="post-excerpt">
+              {{ post.content|striptags|truncate(180) }}...
+            </p>
+
+            <div class="tags">
+              <a href="{{ url_for('routes.user', category=post.category) }}" class="tag">
+                {{ post.category }}
+              </a>
+            </div>
           </div>
-
-          <h3 class="post-title">
-            <a href="{{ url_for('routes.post_detail', post_id=post.id) }}">
-              {{ post.title }}
-            </a>
-          </h3>
-
-          <p class="post-excerpt">
-            {{ post.content|striptags|truncate(180) }}...
-          </p>
-
-          <div class="tags">
-            <span class="tag">New</span>
-            <!-- You can add real tags later -->
-          </div>
-        </div>
-      </article>
+        </article>
+      {% endfor %}
     {% else %}
       <p style="text-align:center; color:var(--text-light); margin: 3rem 0;">
-        No posts yet — check back soon!
+        {% if current_category %}
+          No posts in "{{ current_category }}" yet — check back soon!
+        {% else %}
+          No posts yet — check back soon!
+        {% endif %}
       </p>
-    {% endfor %}
+    {% endif %}
   </div>
 
 {% endblock %}

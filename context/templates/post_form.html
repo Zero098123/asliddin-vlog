@@ -11,6 +11,11 @@
       <input type="text" name="title" value="{{ post.title if post }}" required 
              style="width:100%; padding:1rem; font-size:1.1rem; border-radius:8px; border:1px solid #ccc;">
     </div>
+    <div style="margin-bottom:1rem;">
+      <label><strong>Category</strong></label>
+      <input type="text" name="category" value="{{ post.category if post }}" required 
+             style="width:100%; padding:1rem; font-size:1.1rem; border-radius:8px; border:1px solid #ccc;">
+    </div>
 
     <div style="margin-bottom:1.5rem;">
       <label><strong>Content (Markdown supported)</strong></label>

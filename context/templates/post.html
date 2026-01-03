@@ -9,8 +9,7 @@
     {{ post.title }}
   </h1>
   <div style="color: var(--text-light); margin-bottom: 2rem; font-size: 1rem;">
-    <span>{{ post.date_posted.strftime('%B %d, %Y') }}</span>
-    <span>•</span>
+    
     <span>by <strong>{{ post.author.username }}</strong></span>
     {% if post.author.is_admin %}
       <span style="background:#2563eb; color:white; padding:2px 8px; border-radius:12px; font-size:0.8rem;">Admin</span>
@@ -73,7 +72,7 @@
   </div>
 
   <div style="margin-top: 3rem; text-align: center;">
-    <a href="{{ url_for('routes.user') }}" style="color:#2563eb;">← Back to all posts</a>
+    <a href="/" style="color:#2563eb;">← Back to all posts</a>
   </div>
 
 </div>

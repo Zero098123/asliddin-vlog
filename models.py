@@ -21,6 +21,8 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     comments = db.relationship('Comment', backref='post', lazy=True, cascade='all, delete-orphan')
+    category = db.Column(db.String(50))  # e.g., "Python", "Web Dev", "Life"
+    # ... other fields like user_id, etc.
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

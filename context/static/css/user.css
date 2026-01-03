@@ -319,3 +319,56 @@
     padding: 2rem;
   }
 }
+
+
+
+/* Category Filter Styles */
+.category-filter {
+  margin: 2rem 0 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.category-filter a {
+  padding: 0.5rem 1rem;
+  background: #f0f0f0;
+  border-radius: 2rem;
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: #444;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.category-filter a:hover {
+  background: #e0e0e0;
+}
+
+.category-filter a.active {
+  background: #0066ff;
+  color: white;
+}
+
+.current-filter {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  background: #e6f0ff;
+  color: #0066cc;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  text-decoration: none;
+  margin-top: 0.5rem;
+}
+
+.tag:hover {
+  background: #d0e4ff;
+}
